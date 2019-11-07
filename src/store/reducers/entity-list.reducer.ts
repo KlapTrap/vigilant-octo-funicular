@@ -1,6 +1,6 @@
 import { createReducer, on, Action } from '@ngrx/store';
-import { EntityLists } from './node_modules/src/types/store.types';
-import { getBaseInitialState } from './reducers.helpers';
+import { EntityLists } from 'src/app/types/store.types';
+import { getBaseInitialState } from 'src/app/store/reducers/reducers.helpers';
 
 const pEntityListReducers = createReducer<EntityLists>(getBaseInitialState());
 

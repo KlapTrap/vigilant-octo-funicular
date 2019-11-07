@@ -1,31 +1,32 @@
 import { createAction, props } from '@ngrx/store';
 import { appActionPrefix } from './action-helpers';
+import { HttpRequest } from '@angular/common/http';
 
 const actionPrefix = `${appActionPrefix}create`;
 
-export const startFetchEntityList = createAction(
+export const startCreateEntity = createAction(
   `${actionPrefix}`,
   props<{
     entityType: string;
-    url: string;
+    request: HttpRequest<any>;
     listKey?: string;
   }>(),
 );
 
-export const fetchEntityListSuccess = createAction(
+export const createEntitySuccess = createAction(
   `${actionPrefix}/success`,
   props<{
     entityType: string;
-    url: string;
+    request: HttpRequest<any>;
     listKey?: string;
   }>(),
 );
 
-export const fetchEntityListFailure = createAction(
+export const createEntityFailure = createAction(
   `${actionPrefix}/failure`,
   props<{
     entityType: string;
-    url: string;
+    request: HttpRequest<any>;
     listKey?: string;
   }>(),
 );

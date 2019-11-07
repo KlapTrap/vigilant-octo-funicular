@@ -10,12 +10,16 @@ import { entityListReducers } from './store/reducers/entity-list.reducer';
 import { entitiesReducers } from './store/reducers/entity.reducer';
 import { entityRequestReducers } from './store/reducers/enity-request.reducer';
 import { environment } from 'src/environments/environment';
+import { HttpClientModule } from '@angular/common/http';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
+    EffectsModule,
     StoreModule.forRoot<StoreState>({
       entityLists: entityListReducers,
       entites: entitiesReducers,

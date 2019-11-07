@@ -1,6 +1,6 @@
 import { createReducer, on, Action } from '@ngrx/store';
-import { Entities } from 'src/app/types/store.types';
 import { getBaseInitialState } from './reducers.helpers';
+import { Entities } from '../../types/store.types';
 
 const pEntitiesReducers = createReducer<Entities>(getBaseInitialState());
 
