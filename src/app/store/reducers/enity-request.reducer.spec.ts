@@ -3,7 +3,7 @@ import * as ListActions from '../actions/entity-list.actions';
 
 describe('EnityRequestReducer', () => {
   const testEntityType = 'post';
-  it('should set fetching for entity', () => {
+  it('should set request state for entity', () => {
     const normalisedResponse = {
       ids: [8, 5],
       // TODO: We don't need entities, we should loosen the typing to
