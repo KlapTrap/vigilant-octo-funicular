@@ -20,11 +20,20 @@ import { EffectsModule } from '@ngrx/effects';
     AppRoutingModule,
     HttpClientModule,
     EffectsModule,
-    StoreModule.forRoot<StoreState>({
-      entityLists: entityListReducers,
-      entites: entitiesReducers,
-      entityRequests: entityRequestReducers,
-    }),
+    StoreModule.forRoot<StoreState>(
+      {
+        entityLists: entityListReducers,
+        entites: entitiesReducers,
+        entityRequests: entityRequestReducers,
+      },
+      {
+        runtimeChecks: {
+          strictActionImmutability: true,
+          strictStateImmutability: true,
+          strictStateSerializability: true,
+        },
+      },
+    ),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states
       logOnly: environment.production, // Restrict extension to log-only mode
