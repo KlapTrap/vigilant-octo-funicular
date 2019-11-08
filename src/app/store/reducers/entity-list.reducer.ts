@@ -1,15 +1,13 @@
 import { createReducer, on, Action, State } from '@ngrx/store';
 import {
-  EntityRequests,
   RequestState,
   EntityLists,
-  StoreEntityMap,
-  EntityList,
+  StoreEntityKeys,
 } from 'src/app/types/store.types';
 import { getBaseInitialState } from './reducers.helpers';
 import * as ListActions from '../actions/entity-list.actions';
 
-function setRequestState<Y extends keyof StoreEntityMap>(
+function setRequestState<Y extends StoreEntityKeys>(
   appState: EntityLists,
   entityType: Y,
   listKey: string,
@@ -28,7 +26,7 @@ function setRequestState<Y extends keyof StoreEntityMap>(
   };
 }
 
-function completeListRequest<Y extends keyof StoreEntityMap>(
+function completeListRequest<Y extends StoreEntityKeys>(
   appState: EntityLists,
   entityType: Y,
   listKey: string,

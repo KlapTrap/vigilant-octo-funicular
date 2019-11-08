@@ -8,7 +8,12 @@ import {
 } from '../actions/entity-list.actions';
 import { Store, Action } from '@ngrx/store';
 import { map, last, tap, mergeMap } from 'rxjs/operators';
-import { StoreState, StoreEntityMap } from 'src/app/types/store.types';
+import {
+  StoreState,
+  StoreEntityMap,
+  StoreEntityKeys,
+  StoreEntityValues,
+} from 'src/app/types/store.types';
 import { EntityNormaliser } from './normaliser';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
@@ -35,7 +40,7 @@ export class ListRequestEffect {
   ): Observable<Action> {
     return this.httpClient.request(action.request).pipe(
       last(),
-      map((response: HttpResponse<StoreEntityMap[keyof StoreEntityMap][]>) => {
+      map((response: HttpResponse<StoreEntityValues[]>) => {
         const normalisedResponse = EntityNormaliser.normaliseList(
           response.body,
         );

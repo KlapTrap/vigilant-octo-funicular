@@ -17,6 +17,10 @@ export interface StoreEntityMap {
   toto: UserTodo;
 }
 
+export type StoreEntityKeys = keyof StoreEntityMap;
+export type StoreEntityValues = StoreEntityMap[StoreEntityKeys];
+export type StoreEntityValue<T extends StoreEntityKeys> = StoreEntityMap[T];
+
 export interface RequestState {
   busy: boolean;
   error: boolean;
@@ -24,26 +28,27 @@ export interface RequestState {
 }
 
 // Represents a unique list of entities
-export interface EntityList<Y extends string> {
+export interface EntityList<Y extends StoreEntityKeys> {
   ids: number[];
   fetchState: RequestState;
   entityType: Y;
 }
 
 export type EntityLists = {
-  [entityType in keyof StoreEntityMap]: {
+  [entityType in StoreEntityKeys]: {
     [listKey: string]: EntityList<entityType>;
   };
 };
+export interface EntityOfType<T extends StoreEntityKeys> {
+  [entityId: number]: StoreEntityValue<T>;
+}
 
 export type Entities = {
-  [entityType in keyof StoreEntityMap]: {
-    [entityId: number]: StoreEntityMap[entityType];
-  };
+  [entityType in StoreEntityKeys]: EntityOfType<entityType>;
 };
 
 export type EntityRequests = {
-  [key in keyof StoreEntityMap]: {
+  [key in StoreEntityKeys]: {
     [entityId: number]: RequestState;
   };
 };

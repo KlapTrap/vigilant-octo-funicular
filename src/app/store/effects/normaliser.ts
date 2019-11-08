@@ -1,5 +1,10 @@
-import { StoreEntityMap } from 'src/app/types/store.types';
-export interface NormalisedResponse<Y extends keyof StoreEntityMap> {
+import {
+  StoreEntityMap,
+  StoreEntityKeys,
+  StoreEntityValue,
+  EntityOfType,
+} from 'src/app/types/store.types';
+export interface NormalisedResponse<Y extends StoreEntityKeys> {
   ids: number[];
   entities: {
     [entityId: number]: StoreEntityMap[Y];
@@ -12,7 +17,7 @@ export class EntityNormaliser {
       entities: {},
     };
   }
-  static normaliseList<Y extends keyof StoreEntityMap>(
+  static normaliseList<Y extends StoreEntityKeys>(
     entities: StoreEntityMap[Y][],
   ): NormalisedResponse<Y> {
     return entities.reduce((normed, entity) => {
@@ -22,12 +27,22 @@ export class EntityNormaliser {
       };
     }, EntityNormaliser.getBaseNormalisedResult());
   }
-  static normaliseEntity<Y extends keyof StoreEntityMap>(
+
+  static normaliseEntity<Y extends StoreEntityKeys>(
     entity: StoreEntityMap[Y],
   ): NormalisedResponse<Y> {
     return {
       ids: [entity.id],
       entities: { [entity.id]: entity },
     };
+  }
+
+  static getListFromIds(entityState: EntityOfType<any>, ids: number[]) {
+    return ids.reduce((populatedList, id) => {
+      if (entityState[id]) {
+        populatedList.push(entityState[id]);
+      }
+      return populatedList;
+    }, []);
   }
 }

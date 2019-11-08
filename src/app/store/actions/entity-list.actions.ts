@@ -1,21 +1,21 @@
 import { createAction, props } from '@ngrx/store';
 import { HttpRequest } from '@angular/common/http';
-import { StoreEntityMap } from 'src/app/types/store.types';
+import { StoreEntityKeys, StoreEntityValues } from 'src/app/types/store.types';
 
 const actionPrefix = '@thisApp/fetchEntityList/';
 
 export interface ListRequestLifeCycleAction {
-  entityType: keyof StoreEntityMap;
+  entityType: StoreEntityKeys;
   listKey: string;
 }
 export interface NormalisedResponse {
   ids: number[];
   entities: {
-    [entityId: number]: StoreEntityMap[keyof StoreEntityMap];
+    [entityId: number]: StoreEntityValues;
   };
 }
 export interface ListRequestSuccessAction {
-  entityType: keyof StoreEntityMap;
+  entityType: StoreEntityKeys;
   listKey: string;
   normalisedResponse: NormalisedResponse;
 }
