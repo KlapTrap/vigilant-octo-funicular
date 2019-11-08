@@ -28,6 +28,29 @@ function setRequestState<Y extends keyof StoreEntityMap>(
   };
 }
 
+function completeListRequest<Y extends keyof StoreEntityMap>(
+  appState: EntityLists,
+  entityType: Y,
+  listKey: string,
+  ids: number[],
+): EntityLists {
+  return {
+    ...appState,
+    [entityType]: {
+      ...appState[entityType],
+      [listKey]: {
+        fetchState: {
+          busy: false,
+          error: false,
+          errorMessage: '',
+        },
+        ids: [...ids],
+        entityType,
+      },
+    },
+  };
+}
+
 const pEntityListReducers = createReducer<EntityLists>(
   getBaseInitialState(),
   on(ListActions.fetchEntityList, (state, action) =>
@@ -38,11 +61,12 @@ const pEntityListReducers = createReducer<EntityLists>(
     }),
   ),
   on(ListActions.fetchEntityListSuccess, (state, action) =>
-    setRequestState(state, action.entityType, action.listKey, {
-      error: false,
-      errorMessage: '',
-      busy: false,
-    }),
+    completeListRequest(
+      state,
+      action.entityType,
+      action.listKey,
+      action.normalisedResponse.ids,
+    ),
   ),
   on(ListActions.fetchEntityListFailure, (state, action) =>
     setRequestState(state, action.entityType, action.listKey, {
