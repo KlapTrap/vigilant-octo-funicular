@@ -8,16 +8,16 @@ export interface ListRequestLifeCycleAction {
   entityType: keyof StoreEntityMap;
   listKey: string;
 }
-
+export interface NormalisedResponse {
+  ids: number[];
+  entities: {
+    [entityId: number]: StoreEntityMap[keyof StoreEntityMap];
+  };
+}
 export interface ListRequestSuccessAction {
   entityType: keyof StoreEntityMap;
   listKey: string;
-  normalisedResponse: {
-    ids: number[];
-    entities: {
-      [entityId: number]: StoreEntityMap[keyof StoreEntityMap];
-    };
-  };
+  normalisedResponse: NormalisedResponse;
 }
 
 export interface ListInitiateRequestAction extends ListRequestLifeCycleAction {

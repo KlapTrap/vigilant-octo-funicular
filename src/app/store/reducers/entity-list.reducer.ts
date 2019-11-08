@@ -1,8 +1,57 @@
-import { createReducer, on, Action } from '@ngrx/store';
-import { EntityLists } from 'src/app/types/store.types';
+import { createReducer, on, Action, State } from '@ngrx/store';
+import {
+  EntityRequests,
+  RequestState,
+  EntityLists,
+  StoreEntityMap,
+  EntityList,
+} from 'src/app/types/store.types';
 import { getBaseInitialState } from './reducers.helpers';
+import * as ListActions from '../actions/entity-list.actions';
 
-const pEntityListReducers = createReducer<EntityLists>(getBaseInitialState());
+function setRequestState<Y extends keyof StoreEntityMap>(
+  appState: EntityLists,
+  entityType: Y,
+  listKey: string,
+  fetchState: RequestState,
+): EntityLists {
+  return {
+    ...appState,
+    [entityType]: {
+      ...appState[entityType],
+      [listKey]: {
+        fetchState,
+        ids: [],
+        entityType,
+      },
+    },
+  };
+}
+
+const pEntityListReducers = createReducer<EntityLists>(
+  getBaseInitialState(),
+  on(ListActions.fetchEntityList, (state, action) =>
+    setRequestState(state, action.entityType, action.listKey, {
+      error: false,
+      errorMessage: '',
+      busy: true,
+    }),
+  ),
+  on(ListActions.fetchEntityListSuccess, (state, action) =>
+    setRequestState(state, action.entityType, action.listKey, {
+      error: false,
+      errorMessage: '',
+      busy: false,
+    }),
+  ),
+  on(ListActions.fetchEntityListFailure, (state, action) =>
+    setRequestState(state, action.entityType, action.listKey, {
+      error: true,
+      errorMessage: 'Oopsie Doopsie, we failed. :(',
+      busy: false,
+    }),
+  ),
+);
 
 export function entityListReducers(state: EntityLists, action: Action) {
   return pEntityListReducers(state, action);
