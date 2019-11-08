@@ -12,6 +12,12 @@ const pEntitiesReducers = createReducer<Entities>(
       ...action.normalisedResponse.entities,
     },
   })),
+  on(fetchEntityListSuccess, (state, action) => {
+    if (action.type === 'post') {
+      return;
+    }
+    return state;
+  }),
 );
 
 export function entitiesReducers(state: Entities, action: Action) {

@@ -1,9 +1,10 @@
 import {
-  UserPost,
   PostComment,
   AlbumPhoto,
   UserAlbum,
   UserTodo,
+  User,
+  UserPost,
 } from './api-entities.types';
 
 //
@@ -15,6 +16,7 @@ export interface StoreEntityMap {
   photo: AlbumPhoto;
   album: UserAlbum;
   toto: UserTodo;
+  user: User;
 }
 
 export type StoreEntityKeys = keyof StoreEntityMap;

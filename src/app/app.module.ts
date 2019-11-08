@@ -12,6 +12,7 @@ import { entityRequestReducers } from './store/reducers/enity-request.reducer';
 import { environment } from 'src/environments/environment';
 import { HttpClientModule } from '@angular/common/http';
 import { EffectsModule } from '@ngrx/effects';
+import { ComponentsModule } from './components/components.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -38,6 +39,7 @@ import { EffectsModule } from '@ngrx/effects';
       maxAge: 25, // Retains last 25 states
       logOnly: environment.production, // Restrict extension to log-only mode
     }),
+    ComponentsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

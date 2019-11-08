@@ -5,5 +5,6 @@ export function getBaseInitialState() {
     comment: {},
     photo: {},
     toto: {},
+    user: {},
   };
 }
