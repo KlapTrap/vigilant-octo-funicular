@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { StoreState } from '../types/store.types';
 import { Store } from '@ngrx/store';
 
-import { map, tap } from 'rxjs/operators';
+import { map, share, filter } from 'rxjs/operators';
 import { selectList } from './selectors/entity-list.selectors';
 import { combineLatest, Observable } from 'rxjs';
 import { selectEntitiesOfType } from './selectors/entity.selectors';
@@ -17,9 +17,10 @@ export class StoreService {
   private readonly allListKey = 'all';
   constructor(private store: Store<StoreState>) {}
   private selectUser(userId: number) {
-    return this.store
-      .select(selectEntitiesOfType('user'))
-      .pipe(map(users => users[userId]));
+    return this.store.select(selectEntitiesOfType('user')).pipe(
+      map(users => users[userId]),
+      share(),
+    );
   }
 
   public getPostsWithUser(): Observable<UserPostWithUser[]> {
@@ -27,10 +28,14 @@ export class StoreService {
       this.store.select(selectList('post', this.allListKey)),
       this.store.select(selectEntitiesOfType('post')),
     ).pipe(
+      filter(
+        ([list, entities]) =>
+          !!list && !!entities && Object.keys(entities).length > 0,
+      ),
       map(([list, entities]) =>
         list.ids.map(id => ({
           ...entities[id],
-          user$: this.selectUser(id),
+          user$: this.selectUser(entities[id].userId),
         })),
       ),
     );

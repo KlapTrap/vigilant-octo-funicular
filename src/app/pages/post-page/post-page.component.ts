@@ -16,7 +16,6 @@ export class PostPageComponent implements OnInit {
     public store: Store<StoreState>,
     public storeService: StoreService,
   ) {}
-
   ngOnInit() {
     this.storeService.fetchPosts();
     this.storeService.fetchUsers();

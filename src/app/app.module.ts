@@ -13,6 +13,7 @@ import { environment } from 'src/environments/environment';
 import { HttpClientModule } from '@angular/common/http';
 import { EffectsModule } from '@ngrx/effects';
 import { ComponentsModule } from './components/components.module';
+import { PipesModule } from './pipes/pipes.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -40,6 +41,7 @@ import { ComponentsModule } from './components/components.module';
       logOnly: environment.production, // Restrict extension to log-only mode
     }),
     ComponentsModule,
+    PipesModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,5 +1,12 @@
+@import '../../../variables';
+
 .post-list {
   &__post {
     margin-bottom: 35px;
+  }
+
+  &__selected-author {
+    color: $accent-color;
+    margin-top: -50px;
   }
 }

@@ -1,5 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { UserPostWithUser } from 'src/app/types/api-entities.types';
+import { Component, OnInit, Input, Output } from '@angular/core';
+import { UserPostWithUser, User } from 'src/app/types/api-entities.types';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-post',
@@ -9,7 +10,13 @@ import { UserPostWithUser } from 'src/app/types/api-entities.types';
 export class PostComponent implements OnInit {
   constructor() {}
 
-  @Input() post: UserPostWithUser;
+  @Input() public post: UserPostWithUser;
+
+  @Output() public authorSelected = new Subject<User>();
+
+  public selectAuthor(author: User) {
+    this.authorSelected.next(author);
+  }
 
   ngOnInit() {}
 }

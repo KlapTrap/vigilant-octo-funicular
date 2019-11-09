@@ -3,7 +3,8 @@
     <div class="post__title">
       {{post.title}}
     </div>
-    <div class="post__author" *ngIf="post.user$ | async as author">{{ author.name }}</div>
+    <div class="post__author" *ngIf="post.user$ | async as author" (click)="selectAuthor(author)">
+      {{ author.name }}</div>
   </div>
   <div class="post__body">
     {{post.body}}
