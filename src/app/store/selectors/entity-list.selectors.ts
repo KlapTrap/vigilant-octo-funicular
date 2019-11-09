@@ -2,8 +2,6 @@ import {
   StoreEntityKeys,
   StoreState,
   EntityLists,
-  EntityListsOfType,
-  EntityList,
 } from 'src/app/types/store.types';
 import { createSelector, createFeatureSelector } from '@ngrx/store';
 
@@ -14,7 +12,7 @@ export const selectListState = createFeatureSelector<StoreState, EntityLists>(
 export const selectListsOfType = <T extends StoreEntityKeys>(entityType: T) =>
   createSelector(
     selectListState,
-    types => types[entityType],
+    types => (types ? types[entityType] : null),
   );
 
 export const selectList = <T extends StoreEntityKeys>(

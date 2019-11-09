@@ -14,7 +14,7 @@ export const selectEntitiesOfType = <T extends StoreEntityKeys>(
 ) =>
   createSelector(
     selectEntitiesState,
-    types => types[entityType],
+    types => (types ? types[entityType] : null),
   );
 
 export const selectEntitiy = <T extends StoreEntityKeys>(
