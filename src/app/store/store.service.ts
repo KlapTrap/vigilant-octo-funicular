@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { StoreState } from '../types/store.types';
+import { StoreState, StoreEntityKeys } from '../types/store.types';
 import { Store } from '@ngrx/store';
 
-import { map, filter, shareReplay } from 'rxjs/operators';
+import { map, filter, shareReplay, startWith, skip } from 'rxjs/operators';
 import { selectList } from './selectors/entity-list.selectors';
 import { combineLatest, Observable } from 'rxjs';
 import { selectEntitiesOfType } from './selectors/entity.selectors';
@@ -15,8 +15,29 @@ import { HttpRequest } from '@angular/common/http';
 })
 export class StoreService {
   private readonly allListKey = 'all';
+
+  public readonly fetchingUsers$ = this.buildFetchingObservable('user');
+  public readonly fetchingPosts$ = this.buildFetchingObservable('post');
+  public readonly fetchingPostsOrUser$ = combineLatest(
+    this.fetchingUsers$,
+    this.fetchingPosts$,
+  ).pipe(
+    skip(1),
+    map(([fetchingUsers, fetchingPosts]) => fetchingUsers || fetchingPosts),
+    startWith(true),
+  );
+
   constructor(private store: Store<StoreState>) {}
   private selectUserObsCache: { [userId: number]: Observable<User> } = {};
+
+  private buildFetchingObservable(entityType: StoreEntityKeys) {
+    return this.store.select(selectList(entityType, this.allListKey)).pipe(
+      filter(list => !!list && !!list.fetchState),
+      map(list => list.fetchState.busy),
+      startWith(false),
+    );
+  }
+
   private _selectUser(userId: number) {
     return this.store.select(selectEntitiesOfType('user')).pipe(
       map(users => users[userId]),
@@ -62,6 +83,7 @@ export class StoreService {
       }),
     );
   }
+
   public fetchUsers() {
     this.store.dispatch(
       startFetchEntityList({

@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { UserPostWithUser } from 'src/app/types/api-entities.types';
 import { Observable } from 'rxjs';
 import { StoreService } from 'src/app/store/store.service';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-post-page',
@@ -12,6 +13,7 @@ import { StoreService } from 'src/app/store/store.service';
 })
 export class PostPageComponent implements OnInit {
   public posts$: Observable<UserPostWithUser[]>;
+  public busy$: Observable<boolean>;
   constructor(
     public store: Store<StoreState>,
     public storeService: StoreService,
@@ -19,6 +21,7 @@ export class PostPageComponent implements OnInit {
   ngOnInit() {
     this.storeService.fetchPosts();
     this.storeService.fetchUsers();
+    this.busy$ = this.storeService.fetchingPostsOrUser$.pipe(tap(console.log));
     this.posts$ = this.storeService.getPostsWithUser();
   }
 }

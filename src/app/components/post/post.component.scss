@@ -5,6 +5,7 @@
   border-radius: 5px;
   color: $font-color;
   padding: 35px;
+  min-height: 200px;
 
   &__header {
     border-bottom: 1px #7070703d solid;
@@ -18,7 +19,13 @@
   }
 
   &__author {
+    @include button-reset;
+    cursor: pointer;
     font-size: 15px;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 
   &__body {

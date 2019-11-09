@@ -10,7 +10,9 @@ import { Subject } from 'rxjs';
 export class PostComponent implements OnInit {
   constructor() {}
 
-  @Input() public post: UserPostWithUser;
+  @Input() public post?: UserPostWithUser;
+
+  @Input() public busy = false;
 
   @Output() public authorSelected = new Subject<User>();
 

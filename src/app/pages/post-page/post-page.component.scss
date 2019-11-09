@@ -3,9 +3,14 @@
 .post-page {
   width: 70%;
 
+  &__outer {
+    margin-top: 150px;
+  }
+
   &__header {
     color: $accent-color;
     font-size: 100px;
     font-weight: 100;
+    margin: 0 0 50px 0;
   }
 }
