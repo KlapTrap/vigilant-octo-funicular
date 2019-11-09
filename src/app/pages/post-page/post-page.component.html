@@ -1,1 +1,6 @@
-<app-post-list *ngIf="posts$ | async as posts" [posts]="posts"></app-post-list>
+<div class="post-page__outer">
+  <h1 class="post-page__header">Posts</h1>
+  <div class="post-page">
+    <app-post-list *ngIf="posts$ | async as posts" [posts]="posts"></app-post-list>
+  </div>
+</div>

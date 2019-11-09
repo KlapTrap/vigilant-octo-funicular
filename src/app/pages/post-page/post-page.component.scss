@@ -1,0 +1,11 @@
+@import '../../../variables';
+
+.post-page {
+  width: 70%;
+
+  &__header {
+    color: $accent-color;
+    font-size: 100px;
+    font-weight: 100;
+  }
+}

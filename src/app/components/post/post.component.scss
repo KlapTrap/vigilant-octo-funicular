@@ -1,0 +1,28 @@
+@import '../../../_variables.scss';
+
+.post {
+  background-color: white;
+  border-radius: 5px;
+  color: $font-color;
+  padding: 35px;
+
+  &__header {
+    border-bottom: 1px #7070703d solid;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+  }
+
+  &__title {
+    font-size: 30px;
+    padding-bottom: 40px;
+  }
+
+  &__author {
+    font-size: 15px;
+  }
+
+  &__body {
+    font-size: 20px;
+    font-weight: bold;
+  }
+}
