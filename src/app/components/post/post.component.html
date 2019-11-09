@@ -1,11 +1,11 @@
 <div class="post">
   <div class="post__header">
     <div class="post__title">
-      {{post.title}}
+      Title: {{post.title}}
     </div>
-    <div class="post__author" *ngIf="post.user | async as author">{{ author.name }}</div>
+    <div class="post__author" *ngIf="post.user$ | async as author">Author: {{ author.name }}</div>
   </div>
   <div class="post__body">
-    {{post.title}}
+    Body: {{post.body}}
   </div>
 </div>

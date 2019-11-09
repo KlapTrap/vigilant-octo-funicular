@@ -3,7 +3,13 @@ import { Routes, RouterModule } from '@angular/router';
 import { EffectsModule } from '@ngrx/effects';
 import { ListRequestEffect } from './store/effects/list-request.effect';
 
-const routes: Routes = [{ path: '' }, { path: 'post', loadChildren: () => import('./pages/post-page/post-page.module').then(m => m.PostPageModule) }];
+const routes: Routes = [
+  {
+    path: '',
+    loadChildren: () =>
+      import('./pages/post-page/post-page.module').then(m => m.PostPageModule),
+  },
+];
 
 @NgModule({
   imports: [

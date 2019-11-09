@@ -8,6 +8,7 @@ import { StoreModule } from '@ngrx/store';
 
 @NgModule({
   declarations: [PostPageComponent],
+  exports: [PostPageComponent],
   imports: [StoreModule, CommonModule, PostPageRoutingModule, ComponentsModule],
 })
 export class PostPageModule {}

@@ -15,7 +15,7 @@ export interface UserPost {
 }
 
 export interface UserPostWithUser extends UserPost {
-  user: Observable<User>;
+  user$: Observable<User>;
 }
 
 export interface PostComment {
