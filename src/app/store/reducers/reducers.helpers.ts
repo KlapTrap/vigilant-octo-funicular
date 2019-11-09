@@ -4,6 +4,7 @@ import {
   StoreEntityKeys,
   EntityList,
   EntityListsOfType,
+  AllEntityList,
 } from 'src/app/types/store.types';
 
 export function getBaseInitialState() {
@@ -21,10 +22,11 @@ function getDefaultListState<T extends StoreEntityKeys>(
 ): EntityListsOfType<T> {
   return {
     all: {
+      fromInit: true,
       entityType,
       fetchState: { busy: false, errorMessage: '', error: false },
       ids: [],
-    },
+    } as AllEntityList<T>,
   };
 }
 export function getBaseInitialListState(): EntityLists {

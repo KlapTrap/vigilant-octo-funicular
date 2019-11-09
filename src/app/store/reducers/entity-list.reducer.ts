@@ -41,6 +41,7 @@ function completeListRequest<Y extends StoreEntityKeys>(
     [entityType]: {
       ...appState[entityType],
       [listKey]: {
+        fromInit: false,
         fetchState: {
           busy: false,
           error: false,

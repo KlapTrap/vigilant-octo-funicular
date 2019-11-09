@@ -7,23 +7,32 @@ import {
   fetchEntityListSuccess,
 } from '../actions/entity-list.actions';
 import { Store, Action } from '@ngrx/store';
-import { map, last, tap, mergeMap } from 'rxjs/operators';
+import { map, last, tap, mergeMap, filter } from 'rxjs/operators';
 import {
   StoreState,
-  StoreEntityMap,
-  StoreEntityKeys,
   StoreEntityValues,
+  AllEntityList,
 } from 'src/app/types/store.types';
 import { EntityNormaliser } from './normaliser';
-import { Observable } from 'rxjs';
+import { Observable, combineLatest, of } from 'rxjs';
 import { Injectable } from '@angular/core';
+import { selectList } from '../selectors/entity-list.selectors';
 
 @Injectable()
 export class ListRequestEffect {
   public fetchList$ = createEffect(() =>
     this.actions$.pipe(
       ofType(startFetchEntityList),
-      tap(action =>
+      mergeMap(action =>
+        combineLatest(
+          of(action),
+          this.store.select(selectList(action.entityType, action.listKey)),
+        ),
+      ),
+      filter(
+        ([action, list]) => !list || (list as AllEntityList<any>).fromInit,
+      ),
+      tap(([action]) =>
         this.store.dispatch(
           fetchEntityList({
             entityType: action.entityType,
@@ -31,7 +40,7 @@ export class ListRequestEffect {
           }),
         ),
       ),
-      mergeMap(action => this.makeListRequest(action)),
+      mergeMap(([action]) => this.makeListRequest(action)),
     ),
   );
 

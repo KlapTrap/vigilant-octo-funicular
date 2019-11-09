@@ -35,7 +35,9 @@ export interface EntityList<Y extends StoreEntityKeys> {
   fetchState: RequestState;
   entityType: Y;
 }
-
+export type AllEntityList<T extends StoreEntityKeys> = EntityList<T> & {
+  fromInit: boolean;
+};
 export type EntityTypeBaseState = {
   [entityType in StoreEntityKeys]: EntityBaseState;
 };
@@ -44,7 +46,7 @@ export interface EntityBaseState {
   [listKey: string]: any;
 }
 export interface EntityListsOfType<T extends StoreEntityKeys> {
-  all: EntityList<T>;
+  all: AllEntityList<T>;
   [listKey: string]: EntityList<T>;
 }
 export type EntityLists = {
