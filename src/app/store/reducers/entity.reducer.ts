@@ -2,6 +2,7 @@ import { createReducer, on, Action } from '@ngrx/store';
 import { getBaseInitialState } from './reducers.helpers';
 import { Entities } from '../../types/store.types';
 import { fetchEntityListSuccess } from '../actions/entity-list.actions';
+import { createEntitySuccess } from '../actions/entity.actions';
 
 const pEntitiesReducers = createReducer<Entities>(
   getBaseInitialState(),
@@ -12,11 +13,14 @@ const pEntitiesReducers = createReducer<Entities>(
       ...action.normalisedResponse.entities,
     },
   })),
-  on(fetchEntityListSuccess, (state, action) => {
-    if (action.type === 'post') {
-      return;
-    }
-    return state;
+  on(createEntitySuccess, (state, action) => {
+    return {
+      ...state,
+      [action.entityType]: {
+        ...state[action.entityType],
+        ...action.normalisedResponse.entities,
+      },
+    };
   }),
 );
 

@@ -1,61 +1,65 @@
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { HttpClient, HttpResponse } from '@angular/common/http';
 import {
-  startFetchEntityList,
-  fetchEntityList,
-  ListInitiateRequestAction,
-  fetchEntityListSuccess,
-} from '../actions/entity-list.actions';
-import { Store, Action } from '@ngrx/store';
+  HttpClient,
+  HttpResponse,
+  HttpRequest,
+  HttpHeaders,
+} from '@angular/common/http';
+import { Action } from '@ngrx/store';
 import { map, last, tap, mergeMap } from 'rxjs/operators';
 import {
-  StoreState,
-  StoreEntityMap,
-  StoreEntityKeys,
   StoreEntityValues,
+  StoreEntityKeys,
+  StoreEntityValue,
 } from 'src/app/types/store.types';
 import { EntityNormaliser } from './normaliser';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
+import {
+  startCreateEntity,
+  createEntitySuccess,
+  EntityWithoutId,
+} from '../actions/entity.actions';
 
 @Injectable()
-export class ListRequestEffect {
-  public fetchList$ = createEffect(() =>
+export class EntityCreateEffect {
+  public createEntity$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(startFetchEntityList),
-      tap(action =>
-        this.store.dispatch(
-          fetchEntityList({
-            entityType: action.entityType,
-            listKey: action.listKey,
-          }),
-        ),
+      ofType(startCreateEntity),
+      mergeMap(action =>
+        this.makeCreateEntityRequest(action.entityType, action.newEntity),
       ),
-      mergeMap(action => this.makeListRequest(action)),
     ),
   );
 
-  private makeListRequest(
-    action: ListInitiateRequestAction,
-  ): Observable<Action> {
-    return this.httpClient.request(action.request).pipe(
+  private makeCreateEntityRequest<T extends StoreEntityKeys>(
+    entityType: T,
+    newEntity: EntityWithoutId<T>,
+  ) {
+    const request = new HttpRequest<EntityWithoutId<T>>(
+      'POST',
+      `https://jsonplaceholder.typicode.com/${entityType}s`,
+      newEntity,
+      {
+        headers: new HttpHeaders({
+          'Content-type': 'application/json; charset=UTF-8',
+        }),
+      },
+    );
+    return this.httpClient.request(request).pipe(
       last(),
-      map((response: HttpResponse<StoreEntityValues[]>) => {
-        const normalisedResponse = EntityNormaliser.normaliseList(
-          response.body,
-        );
-        return fetchEntityListSuccess({
-          entityType: action.entityType,
-          listKey: action.listKey,
+      map((response: HttpResponse<StoreEntityValue<T>>) => {
+        const normalisedResponse = EntityNormaliser.normaliseEntity({
+          ...newEntity,
+          ...response.body,
+        });
+        return createEntitySuccess({
+          entityType,
           normalisedResponse,
         });
       }),
     );
   }
 
-  constructor(
-    private actions$: Actions,
-    private httpClient: HttpClient,
-    private store: Store<StoreState>,
-  ) {}
+  constructor(private actions$: Actions, private httpClient: HttpClient) {}
 }

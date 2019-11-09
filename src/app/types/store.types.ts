@@ -44,6 +44,7 @@ export interface EntityBaseState {
   [listKey: string]: any;
 }
 export interface EntityListsOfType<T extends StoreEntityKeys> {
+  all: EntityList<T>;
   [listKey: string]: EntityList<T>;
 }
 export type EntityLists = {

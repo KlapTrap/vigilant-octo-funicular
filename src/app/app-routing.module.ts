@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { EffectsModule } from '@ngrx/effects';
-import { ListRequestEffect } from './store/effects/list-request.effect';
 
 const routes: Routes = [
   {
@@ -9,14 +7,17 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/post-page/post-page.module').then(m => m.PostPageModule),
   },
-  { path: 'create-post', loadChildren: () => import('./pages/post-create/post-create.module').then(m => m.PostCreateModule) },
+  {
+    path: 'create-post',
+    loadChildren: () =>
+      import('./pages/post-create/post-create.module').then(
+        m => m.PostCreateModule,
+      ),
+  },
 ];
 
 @NgModule({
-  imports: [
-    RouterModule.forRoot(routes),
-    EffectsModule.forRoot([ListRequestEffect]),
-  ],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

@@ -14,6 +14,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { EffectsModule } from '@ngrx/effects';
 import { ComponentsModule } from './components/components.module';
 import { PipesModule } from './pipes/pipes.module';
+import { ListRequestEffect } from './store/effects/list-request.effect';
+import { EntityCreateEffect } from './store/effects/entity-create.effect';
 
 @NgModule({
   declarations: [AppComponent],
@@ -21,7 +23,7 @@ import { PipesModule } from './pipes/pipes.module';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    EffectsModule,
+    EffectsModule.forRoot([ListRequestEffect, EntityCreateEffect]),
     StoreModule.forRoot<StoreState>(
       {
         entityLists: entityListReducers,

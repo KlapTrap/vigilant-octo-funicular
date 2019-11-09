@@ -4,8 +4,12 @@ import {
   EntityLists,
   StoreEntityKeys,
 } from 'src/app/types/store.types';
-import { getBaseInitialState } from './reducers.helpers';
+import {
+  getBaseInitialState,
+  getBaseInitialListState,
+} from './reducers.helpers';
 import * as ListActions from '../actions/entity-list.actions';
+import { createEntitySuccess } from '../actions/entity.actions';
 
 function setRequestState<Y extends StoreEntityKeys>(
   appState: EntityLists,
@@ -50,7 +54,7 @@ function completeListRequest<Y extends StoreEntityKeys>(
 }
 
 const pEntityListReducers = createReducer<EntityLists>(
-  getBaseInitialState(),
+  getBaseInitialListState(),
   on(ListActions.fetchEntityList, (state, action) =>
     setRequestState(state, action.entityType, action.listKey, {
       error: false,
@@ -73,6 +77,21 @@ const pEntityListReducers = createReducer<EntityLists>(
       busy: false,
     }),
   ),
+  on(createEntitySuccess, (state, action) => {
+    return {
+      ...state,
+      [action.entityType]: {
+        ...state[action.entityType],
+        all: {
+          ...state[action.entityType].all,
+          ids: [
+            ...state[action.entityType].all.ids,
+            ...action.normalisedResponse.ids,
+          ],
+        },
+      },
+    };
+  }),
 );
 
 export function entityListReducers(state: EntityLists, action: Action) {
