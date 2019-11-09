@@ -1,0 +1,68 @@
+@import '../../../variables';
+
+.create-post {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+
+  &__form {
+    color: $font-color;
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    overflow: auto;
+  }
+
+  &__content {
+    margin-top: 20px;
+
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  &__content-wrapper {
+    flex: 1;
+    overflow: auto;
+  }
+
+  &__submit {
+    @include button-reset;
+    color: $background-color;
+  }
+
+  &__submit-wrapper {
+    display: flex;
+    padding: 5px 10px;
+    flex-direction: row-reverse;
+  }
+
+
+  &__card {
+    background-color: white;
+    border-radius: 10px 10px 0 0;
+    padding: 20px;
+    height: 80%;
+  }
+
+  &__title-input {
+    border: none;
+    border-bottom: 1px rgba(0, 0, 0, 0.2) solid;
+    padding-bottom: 10px;
+    height: 50px;
+    font-size: 45px;
+
+    &:focus {
+      border-color: $background-color;
+      outline: none;
+    }
+  }
+
+  &__header {
+    color: $accent-color;
+    font-size: 50px;
+    font-weight: 100;
+  }
+}

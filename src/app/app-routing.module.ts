@@ -9,6 +9,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/post-page/post-page.module').then(m => m.PostPageModule),
   },
+  { path: 'create-post', loadChildren: () => import('./pages/post-create/post-create.module').then(m => m.PostCreateModule) },
 ];
 
 @NgModule({

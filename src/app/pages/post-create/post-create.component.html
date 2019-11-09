@@ -1,0 +1,15 @@
+<div class="create-post">
+  <h1 class="create-post__header">Create Article</h1>
+  <div class="create-post__card">
+    <form class="create-post__form">
+      <input placeholder="Title" class="create-post__title-input" />
+      <div class="create-post__content-wrapper">
+        <div contenteditable="true" class="create-post__content" placeholder="Content"
+          (input)="content = $event.target.innerText">Content</div>
+      </div>
+      <div class="create-post__submit-wrapper">
+        <button class="create-post__submit" role="submit">Create</button>
+      </div>
+    </form>
+  </div>
+</div>
