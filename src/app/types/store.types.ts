@@ -43,11 +43,11 @@ export type EntityTypeBaseState = {
 export interface EntityBaseState {
   [listKey: string]: any;
 }
-
+export interface EntityListsOfType<T extends StoreEntityKeys> {
+  [listKey: string]: EntityList<T>;
+}
 export type EntityLists = {
-  [entityType in StoreEntityKeys]: {
-    [listKey: string]: EntityList<entityType>;
-  };
+  [entityType in StoreEntityKeys]: EntityListsOfType<entityType>;
 };
 export interface EntityOfType<T extends StoreEntityKeys> {
   [entityId: number]: StoreEntityValue<T>;

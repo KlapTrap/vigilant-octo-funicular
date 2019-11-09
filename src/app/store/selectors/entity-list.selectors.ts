@@ -1,4 +1,27 @@
-import { createSelector } from '@ngrx/store';
-import { selectEntityType } from './base.selectors';
+import {
+  StoreEntityKeys,
+  StoreState,
+  EntityLists,
+  EntityListsOfType,
+  EntityList,
+} from 'src/app/types/store.types';
+import { createSelector, createFeatureSelector } from '@ngrx/store';
 
-// export const selectList = (state: )
+export const selectListState = createFeatureSelector<StoreState, EntityLists>(
+  'entityLists',
+);
+
+export const selectListsOfType = <T extends StoreEntityKeys>(entityType: T) =>
+  createSelector(
+    selectListState,
+    types => types[entityType],
+  );
+
+export const selectList = <T extends StoreEntityKeys>(
+  entityType: T,
+  listType: string,
+) =>
+  createSelector(
+    selectListsOfType<T>(entityType),
+    types => types[listType],
+  );
