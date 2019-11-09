@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { StoreState } from '../types/store.types';
 import { Store } from '@ngrx/store';
 
-import { map, share, filter } from 'rxjs/operators';
+import { map, filter, shareReplay } from 'rxjs/operators';
 import { selectList } from './selectors/entity-list.selectors';
 import { combineLatest, Observable } from 'rxjs';
 import { selectEntitiesOfType } from './selectors/entity.selectors';
-import { UserPostWithUser } from '../types/api-entities.types';
+import { UserPostWithUser, User } from '../types/api-entities.types';
 import { startFetchEntityList } from './actions/entity-list.actions';
 import { HttpRequest } from '@angular/common/http';
 
@@ -16,11 +16,20 @@ import { HttpRequest } from '@angular/common/http';
 export class StoreService {
   private readonly allListKey = 'all';
   constructor(private store: Store<StoreState>) {}
-  private selectUser(userId: number) {
+  private selectUserObsCache: { [userId: number]: Observable<User> } = {};
+  private _selectUser(userId: number) {
     return this.store.select(selectEntitiesOfType('user')).pipe(
       map(users => users[userId]),
-      share(),
+      shareReplay(1),
     );
+  }
+
+  private selectUser(userId: number) {
+    if (this.selectUserObsCache[userId]) {
+      return this.selectUserObsCache[userId];
+    }
+    this.selectUserObsCache[userId] = this._selectUser(userId);
+    return this.selectUserObsCache[userId];
   }
 
   public getPostsWithUser(): Observable<UserPostWithUser[]> {
