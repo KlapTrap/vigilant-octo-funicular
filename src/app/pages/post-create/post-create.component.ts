@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { startCreateEntity } from 'src/app/store/actions/entity.actions';
 import { HttpRequest, HttpHeaders } from '@angular/common/http';
 import { UserPost } from 'src/app/types/api-entities.types';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-post-create',
@@ -13,7 +14,7 @@ import { UserPost } from 'src/app/types/api-entities.types';
 export class PostCreateComponent implements OnInit {
   public content: string;
   public title: string;
-  constructor(public store: Store<StoreState>) {}
+  constructor(public store: Store<StoreState>, public router: Router) {}
   public submit(event: Event) {
     this.store.dispatch(
       startCreateEntity({
@@ -25,6 +26,7 @@ export class PostCreateComponent implements OnInit {
         },
       }),
     );
+    this.router.navigate(['/']);
   }
   ngOnInit() {}
 }
