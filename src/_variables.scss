@@ -41,6 +41,18 @@ $accent-color: #FFD933;
   }
 }
 
+@mixin third-header {
+  color: $accent-color;
+  font-size: 20px;
+  font-weight: 100;
+  margin: 0 0 20px 0;
+
+  @include breakpoint(md) {
+    font-size: 30px;
+    margin: 0 0 50px 0;
+  }
+}
+
 // Simple responsive mixin that I stole from
 // https://medium.com/developing-with-sass/creating-a-dead-simple-sass-mixin-to-handle-responsive-breakpoints-889927b37740
 @mixin breakpoint($class) {

@@ -11,3 +11,15 @@ body {
   height: 100%;
   margin: 0;
 }
+
+h1 {
+  @include main-header;
+}
+
+h2 {
+  @include second-header;
+}
+
+h3 {
+  @include third-header;
+}
