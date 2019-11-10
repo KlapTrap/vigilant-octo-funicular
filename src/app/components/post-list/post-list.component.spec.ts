@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PostListComponent } from './post-list.component';
 import { PostComponent } from '../post/post.component';
+import { PipesModule } from 'src/app/pipes/pipes.module';
 
 describe('PostListComponent', () => {
   let component: PostListComponent;
@@ -10,6 +11,7 @@ describe('PostListComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [PostListComponent, PostComponent],
+      imports: [PipesModule],
     }).compileComponents();
   }));
 

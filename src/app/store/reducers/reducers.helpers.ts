@@ -1,8 +1,6 @@
 import {
   EntityLists,
-  EntityOfType,
   StoreEntityKeys,
-  EntityList,
   EntityListsOfType,
   AllEntityList,
 } from 'src/app/types/store.types';

@@ -15,7 +15,7 @@ export class PostCreateComponent implements OnInit {
   public content: string;
   public title: string;
   constructor(public store: Store<StoreState>, public router: Router) {}
-  public submit(event: Event) {
+  public submit() {
     this.store.dispatch(
       startCreateEntity({
         entityType: 'post',
