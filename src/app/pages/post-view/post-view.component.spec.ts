@@ -3,11 +3,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { PostViewComponent } from './post-view.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ComponentsModule } from 'src/app/components/components.module';
-import { provideMockStore } from '@ngrx/store/testing';
-import {
-  getBaseInitialState,
-  getBaseInitialListState,
-} from 'src/app/store/reducers/reducers.helpers';
 import { getBaseTestStoreProvider } from 'src/app/testing/unit-test-helpers';
 
 describe('PostViewComponent', () => {

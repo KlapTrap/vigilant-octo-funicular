@@ -7,6 +7,7 @@ import { StoreService } from 'src/app/store/store.service';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, filter, first, tap } from 'rxjs/operators';
+import { InfiniteScrollService } from 'src/app/infinite-scroll.service';
 
 @Component({
   selector: 'app-post-view',
@@ -19,6 +20,7 @@ export class PostViewComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private storeService: StoreService,
+    private infiniteScrollService: InfiniteScrollService,
   ) {}
 
   ngOnInit() {
@@ -29,10 +31,12 @@ export class PostViewComponent implements OnInit {
       tap(post => this.storeService.fetchUser(post.userId)),
       map(post => this.storeService.mapPostToPostWithUser(post)),
     );
-    this.comments$ = this.storeService.selectEntityList(
-      'comment',
-      this.storeService.buildListKey(postId),
-    ) as Observable<PostComment[]>;
+    this.comments$ = this.infiniteScrollService.getElementsFromScrollPosition$(
+      this.storeService.selectEntityList(
+        'comment',
+        this.storeService.buildListKey(postId),
+      ) as Observable<PostComment[]>,
+    );
     this.storeService.fetchPost(postId);
     this.storeService.fetchComments(postId);
   }

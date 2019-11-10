@@ -1,12 +1,6 @@
 import { Component, Input, Output } from '@angular/core';
 import { UserPostWithUser, User } from 'src/app/types/api-entities.types';
-import {
-  trigger,
-  state,
-  style,
-  transition,
-  animate,
-} from '@angular/animations';
+import { trigger, style, transition, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-post-list',

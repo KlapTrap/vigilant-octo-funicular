@@ -5,6 +5,7 @@ import { UserPostWithUser } from 'src/app/types/api-entities.types';
 import { Observable } from 'rxjs';
 import { StoreService } from 'src/app/store/store.service';
 import { tap } from 'rxjs/operators';
+import { InfiniteScrollService } from 'src/app/infinite-scroll.service';
 
 @Component({
   selector: 'app-post-page',
@@ -17,11 +18,14 @@ export class PostPageComponent implements OnInit {
   constructor(
     public store: Store<StoreState>,
     public storeService: StoreService,
+    public infiniteScrollService: InfiniteScrollService,
   ) {}
   ngOnInit() {
     this.storeService.fetchPosts();
     this.storeService.fetchUsers();
-    this.busy$ = this.storeService.fetchingPostsOrUser$.pipe(tap(console.log));
-    this.posts$ = this.storeService.getPostsWithUser();
+    this.busy$ = this.storeService.fetchingPostsOrUser$;
+    this.posts$ = this.infiniteScrollService.getElementsFromScrollPosition$(
+      this.storeService.getPostsWithUser(),
+    );
   }
 }
