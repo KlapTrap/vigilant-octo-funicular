@@ -1,7 +1,18 @@
 @import '../../../variables';
 
 .post-page {
+  align-items: flex-end;
+  display: flex;
+  flex-direction: column;
+
+  margin-top: 50px;
   width: 70%;
+
+  &__create {
+    @include button-accent;
+    flex: none;
+    margin-bottom: 10px;
+  }
 
   &__outer {
     margin-top: 150px;

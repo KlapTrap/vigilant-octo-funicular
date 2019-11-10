@@ -1,6 +1,7 @@
 <div class="post-page__outer">
   <h1 class="post-page__header">Articles</h1>
   <div class="post-page">
+    <button class="post-page__create" [routerLink]="['create-post']">Create new</button>
     <app-post-list *ngIf="posts$ | async as posts;" [posts]="posts" [busy]="busy$ | async">
     </app-post-list>
   </div>
