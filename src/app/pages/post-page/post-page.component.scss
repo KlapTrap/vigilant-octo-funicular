@@ -5,8 +5,12 @@
   display: flex;
   flex-direction: column;
 
-  margin-top: 50px;
-  width: 70%;
+  width: 100%;
+
+  @include breakpoint(md) {
+    width: 70%;
+    margin-top: 50px;
+  }
 
   &__create {
     @include button-accent;
@@ -15,13 +19,13 @@
   }
 
   &__outer {
-    margin-top: 150px;
+    @include breakpoint(md) {
+      margin-top: 150px;
+    }
+
   }
 
   &__header {
-    color: $accent-color;
-    font-size: 100px;
-    font-weight: 100;
-    margin: 0 0 50px 0;
+    @include main-header;
   }
 }
