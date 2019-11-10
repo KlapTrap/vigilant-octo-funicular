@@ -86,8 +86,8 @@ const pEntityListReducers = createReducer<EntityLists>(
         all: {
           ...state[action.entityType].all,
           ids: [
-            ...state[action.entityType].all.ids,
             ...action.normalisedResponse.ids,
+            ...state[action.entityType].all.ids,
           ],
         },
       },
