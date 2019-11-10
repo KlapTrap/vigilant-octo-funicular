@@ -16,6 +16,7 @@ import { ComponentsModule } from './components/components.module';
 import { PipesModule } from './pipes/pipes.module';
 import { ListRequestEffect } from './store/effects/list-request.effect';
 import { EntityCreateEffect } from './store/effects/entity-create.effect';
+import { EntityFetchEffect } from './store/effects/entity-fetch.effect';
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,7 +24,11 @@ import { EntityCreateEffect } from './store/effects/entity-create.effect';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    EffectsModule.forRoot([ListRequestEffect, EntityCreateEffect]),
+    EffectsModule.forRoot([
+      ListRequestEffect,
+      EntityCreateEffect,
+      EntityFetchEffect,
+    ]),
     StoreModule.forRoot<StoreState>(
       {
         entityLists: entityListReducers,

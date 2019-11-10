@@ -1,20 +1,28 @@
 import { Injectable } from '@angular/core';
-import { StoreState, StoreEntityKeys } from '../types/store.types';
+import {
+  StoreState,
+  StoreEntityKeys,
+  StoreEntityValue,
+} from '../types/store.types';
 import { Store } from '@ngrx/store';
 
 import { map, filter, shareReplay, startWith, skip } from 'rxjs/operators';
 import { selectList } from './selectors/entity-list.selectors';
 import { combineLatest, Observable, NEVER } from 'rxjs';
-import { selectEntitiesOfType } from './selectors/entity.selectors';
-import { UserPostWithUser, User } from '../types/api-entities.types';
+import {
+  selectEntitiesOfType,
+  selectEntitiy,
+} from './selectors/entity.selectors';
+import { UserPostWithUser, User, UserPost } from '../types/api-entities.types';
 import { startFetchEntityList } from './actions/entity-list.actions';
 import { HttpRequest } from '@angular/common/http';
+import { initGetEntity } from './actions/entity.actions';
 
 @Injectable({
   providedIn: 'root',
 })
 export class StoreService {
-  private readonly allListKey = 'all';
+  public readonly allListKey = 'all';
 
   public readonly fetchingUsers$ = this.buildFetchingObservable('user');
   public readonly fetchingPosts$ = this.buildFetchingObservable('post');
@@ -38,11 +46,10 @@ export class StoreService {
     );
   }
 
-  private _selectUser(userId: number) {
-    return this.store.select(selectEntitiesOfType('user')).pipe(
-      map(users => users[userId]),
-      shareReplay(1),
-    );
+  private _selectUser(userId: number): Observable<User> {
+    return this.selectEntity(userId, 'user').pipe(shareReplay(1)) as Observable<
+      User
+    >;
   }
 
   private selectUser(userId: number) {
@@ -53,9 +60,15 @@ export class StoreService {
     return this.selectUserObsCache[userId];
   }
 
+  public selectEntity<T extends StoreEntityKeys>(id: number, entityType: T) {
+    return this.store.select(selectEntitiy(entityType, id)) as Observable<
+      StoreEntityValue<T>
+    >;
+  }
+
   public getPostsWithUser(): Observable<UserPostWithUser[]> {
     return combineLatest(
-      this.store.select(selectList('post', this.allListKey)),
+      this.selectEntityList('post'),
       this.store.select(selectEntitiesOfType('post')),
     ).pipe(
       filter(
@@ -63,12 +76,32 @@ export class StoreService {
           !!list && !!entities && Object.keys(entities).length > 0,
       ),
       map(([list, entities]) =>
-        list.ids.map(id => ({
-          ...entities[id],
-          user$: entities[id] ? this.selectUser(entities[id].userId) : NEVER,
-        })),
+        list.ids.map(id => this.mapPostToPostWithUser(entities[id])),
       ),
     );
+  }
+
+  public mapPostToPostWithUser(post: UserPost): UserPostWithUser {
+    return {
+      ...post,
+      user$: post ? this.selectUser(post.userId) : NEVER,
+    };
+  }
+
+  public selectEntityList<T extends StoreEntityKeys>(
+    entityType: T,
+    listKey = this.allListKey,
+  ) {
+    return combineLatest(
+      this.store.select(selectList(entityType, listKey)),
+      this.store.select(selectEntitiesOfType(entityType)),
+    ).pipe(
+      map(([entityList, entites]) => entityList.ids.map(id => entites[id])),
+    );
+  }
+
+  public buildListKey(id?: number) {
+    return id ? `${this.allListKey}/${id}` : this.allListKey;
   }
 
   public fetchPosts() {
@@ -93,6 +126,37 @@ export class StoreService {
           'GET',
           'https://jsonplaceholder.typicode.com/users',
         ),
+      }),
+    );
+  }
+
+  public fetchComments(postId: number) {
+    this.store.dispatch(
+      startFetchEntityList({
+        entityType: 'comment',
+        listKey: this.buildListKey(postId),
+        request: new HttpRequest(
+          'GET',
+          `https://jsonplaceholder.typicode.com/posts/${postId}/comments`,
+        ),
+      }),
+    );
+  }
+
+  public fetchPost(id: number) {
+    this.store.dispatch(
+      initGetEntity({
+        entityType: 'post',
+        id,
+      }),
+    );
+  }
+
+  public fetchUser(id: number) {
+    this.store.dispatch(
+      initGetEntity({
+        entityType: 'user',
+        id,
       }),
     );
   }

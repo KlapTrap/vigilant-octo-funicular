@@ -12,7 +12,7 @@ export const selectListState = createFeatureSelector<StoreState, EntityLists>(
 export const selectListsOfType = <T extends StoreEntityKeys>(entityType: T) =>
   createSelector(
     selectListState,
-    types => (types ? types[entityType] : null),
+    types => (types ? types[entityType] : null) as EntityLists[T],
   );
 
 export const selectList = <T extends StoreEntityKeys>(
