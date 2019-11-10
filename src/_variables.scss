@@ -2,6 +2,14 @@ $background-color: #012840;
 $font-color: #707070;
 $accent-color: #FFD933;
 
+@mixin card {
+  background-color: white;
+  border-radius: 5px;
+  color: $font-color;
+  padding: 35px;
+  min-height: 200px;
+}
+
 @mixin button-reset {
   padding: 0;
   border: none;
