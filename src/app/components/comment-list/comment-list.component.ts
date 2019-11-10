@@ -9,6 +9,8 @@ import { PostComment } from 'src/app/types/api-entities.types';
 export class CommentListComponent implements OnInit {
   @Input() comments: PostComment[];
   constructor() {}
-
+  public trackBy(entity: PostComment) {
+    return entity.id;
+  }
   ngOnInit() {}
 }

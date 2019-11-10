@@ -1,5 +1,7 @@
 <div class="post-page">
-  <app-post [post]="post$ | async"></app-post>
+  <button class="post-page__back" [routerLink]="['/']">Back</button>
+  <app-post [post]="post$ | async">
+  </app-post>
   <h3 class="post-page__comments-header">Comments</h3>
 </div>
-<div *ngFor="let comment of comments$ | async">{{comment.body}}</div>
+<app-comment-list [comments]="comments$ | async"></app-comment-list>

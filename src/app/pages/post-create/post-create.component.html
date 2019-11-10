@@ -2,15 +2,15 @@
   <h1 class="create-post__header">Create Article</h1>
   <div class="create-post__card">
     <form class="create-post__form" #form="ngForm" (ngSubmit)="submit($event)">
-      <input required placeholder="Title" role="textbox" title="title" name="title" [(ngModel)]="title"
+      <input tabindex="1" required placeholder="Title" role="textbox" title="title" name="title" [(ngModel)]="title"
         class="create-post__title-input" />
       <div class="create-post__content-wrapper">
-        <div contenteditable="true" role="textbox" aria-multiline="true" class="create-post__content"
+        <div tabindex="2" contenteditable="true" role="textbox" aria-multiline="true" class="create-post__content"
           placeholder="Content" (input)="content = $event.target.innerText">Content</div>
       </div>
       <div class="create-post__submit-wrapper">
-        <button class="create-post__back" [routerLink]="['/']">Go back</button>
-        <button class="create-post__submit" role="submit" [disabled]="!form.form.valid">Create</button>
+        <button tabindex="4" class="create-post__back" [routerLink]="['/']">Go back</button>
+        <button tabindex="3" class="create-post__submit" role="submit" [disabled]="!form.form.valid">Create</button>
       </div>
     </form>
   </div>

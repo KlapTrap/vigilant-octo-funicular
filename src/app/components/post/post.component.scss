@@ -1,11 +1,7 @@
 @import '../../../_variables.scss';
 
 .post {
-  background-color: white;
-  border-radius: 5px;
-  color: $font-color;
-  padding: 35px;
-  min-height: 200px;
+  @include card;
 
   &__header {
     border-bottom: 1px #7070703d solid;
@@ -15,7 +11,9 @@
 
   &__title {
     font-size: 30px;
-    padding-bottom: 15px;
+    margin-bottom: 15px;
+    display: block;
+    color: $font-color;
   }
 
   &__author {

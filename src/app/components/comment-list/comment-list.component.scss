@@ -1,0 +1,30 @@
+@import '../../../variables';
+
+.comment-list {
+  &__comment {
+    @include card;
+    min-height: 0;
+    margin-bottom: 20px;
+  }
+
+  &__comment-label {
+    font-weight: bold;
+  }
+
+  &__comment-value {
+    font-weight: 300;
+  }
+
+  &__comment-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-bottom: 1px #7070703d solid;
+    margin-bottom: 10px;
+    padding-bottom: 20px
+  }
+
+  &__body {
+    white-space: pre-line;
+  }
+}

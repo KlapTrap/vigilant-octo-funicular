@@ -1,1 +1,15 @@
-<p>comment-list works!</p>
+<div class="comment-list">
+  <div *ngFor="let comment of comments; trackBy:trackBy" class="comment-list__comment">
+    <div class="comment-list__comment-header">
+      <div>
+        <div class="comment-list__comment-label">Name</div>
+        <div class="comment-list__comment-value">{{ comment.name }}</div>
+      </div>
+      <div>
+        <div class="comment-list__comment-label">Email</div>
+        <div class="comment-list__comment-value">{{ comment.email }}</div>
+      </div>
+    </div>
+    <div class="comment-list__comment-body">{{ comment.body }}</div>
+  </div>
+</div>

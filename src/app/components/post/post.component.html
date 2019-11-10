@@ -1,7 +1,10 @@
 <article class="post">
   <div *ngIf="!busy && post" class="post__innner">
     <div class="post__header">
-      <div class="post__title">
+      <a *ngIf="link" [routerLink]="[link]" class="post__title">
+        {{ post.title }}
+      </a>
+      <div *ngIf="!link" class="post__title">
         {{ post.title }}
       </div>
       <div *ngIf="post.user$ | async as author" (click)="selectAuthor(author)">

@@ -4,6 +4,6 @@
 </div>
 <div class="post-list" [ngClass]="{'post-list__selected-user': !!selectedAuthor}">
   <div *ngFor=" let post of posts | filterPostsByAuthor:selectedAuthor; trackBy: trackBy" class="post-list__post">
-    <app-post [post]='post' (authorSelected)=setAuthor($event)></app-post>
+    <app-post [link]="'/post/' + post.id" [post]='post' (authorSelected)=setAuthor($event)></app-post>
   </div>
 </div>
