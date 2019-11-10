@@ -67,16 +67,9 @@ export class StoreService {
   }
 
   public getPostsWithUser(): Observable<UserPostWithUser[]> {
-    return combineLatest(
-      this.selectEntityList('post'),
-      this.store.select(selectEntitiesOfType('post')),
-    ).pipe(
-      filter(
-        ([list, entities]) =>
-          !!list && !!entities && Object.keys(entities).length > 0,
-      ),
-      map(([list, entities]) =>
-        list.ids.map(id => this.mapPostToPostWithUser(entities[id])),
+    return this.selectEntityList('post').pipe(
+      map((entities: UserPost[]) =>
+        entities.map(entity => this.mapPostToPostWithUser(entity)),
       ),
     );
   }
@@ -96,6 +89,10 @@ export class StoreService {
       this.store.select(selectList(entityType, listKey)),
       this.store.select(selectEntitiesOfType(entityType)),
     ).pipe(
+      filter(
+        ([entityList, entities]) =>
+          !!entityList && !!entities && Object.keys(entities).length > 0,
+      ),
       map(([entityList, entites]) => entityList.ids.map(id => entites[id])),
     );
   }
