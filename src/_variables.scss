@@ -10,3 +10,9 @@ $accent-color: #FFD933;
   background-color: transparent;
   cursor: pointer;
 }
+
+@mixin button-accent {
+  @include button-reset;
+  color: $accent-color;
+  font-weight: 300;
+}
