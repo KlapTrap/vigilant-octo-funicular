@@ -14,6 +14,11 @@ const routes: Routes = [
         m => m.PostCreateModule,
       ),
   },
+  {
+    path: 'post/:id',
+    loadChildren: () =>
+      import('./pages/post-view/post-view.module').then(m => m.PostViewModule),
+  },
 ];
 
 @NgModule({
