@@ -8,7 +8,7 @@ Tested on chrome 78
 
 ## Designs
 
-See: https://xd.adobe.com/view/a64cd5d8-c320-4433-4eac-254458b9e914-d07d/
+See https://xd.adobe.com/view/a64cd5d8-c320-4433-4eac-254458b9e914-d07d/
 
 ## Development server
 
