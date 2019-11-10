@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 
 import { map, filter, shareReplay, startWith, skip } from 'rxjs/operators';
 import { selectList } from './selectors/entity-list.selectors';
-import { combineLatest, Observable } from 'rxjs';
+import { combineLatest, Observable, NEVER } from 'rxjs';
 import { selectEntitiesOfType } from './selectors/entity.selectors';
 import { UserPostWithUser, User } from '../types/api-entities.types';
 import { startFetchEntityList } from './actions/entity-list.actions';
@@ -65,7 +65,7 @@ export class StoreService {
       map(([list, entities]) =>
         list.ids.map(id => ({
           ...entities[id],
-          user$: this.selectUser(entities[id].userId),
+          user$: entities[id] ? this.selectUser(entities[id].userId) : NEVER,
         })),
       ),
     );
