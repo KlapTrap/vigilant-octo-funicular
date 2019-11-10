@@ -2,8 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PostComponent } from './post.component';
 import { of } from 'rxjs';
-import { provideMockStore } from '@ngrx/store/testing';
-import { getBaseInitialState } from 'src/app/store/reducers/reducers.helpers';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('PostComponent', () => {
   let component: PostComponent;
@@ -12,11 +11,7 @@ describe('PostComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [PostComponent],
-      providers: [
-        provideMockStore({
-          initialState: getBaseInitialState(),
-        }),
-      ],
+      imports: [RouterTestingModule],
     }).compileComponents();
   }));
 

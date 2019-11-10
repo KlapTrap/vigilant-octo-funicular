@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { PostListComponent } from './post-list.component';
 import { PostComponent } from '../post/post.component';
 import { PipesModule } from 'src/app/pipes/pipes.module';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('PostListComponent', () => {
   let component: PostListComponent;
@@ -11,7 +12,7 @@ describe('PostListComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [PostListComponent, PostComponent],
-      imports: [PipesModule],
+      imports: [PipesModule, RouterTestingModule],
     }).compileComponents();
   }));
 

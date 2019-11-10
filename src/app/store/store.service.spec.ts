@@ -4,16 +4,13 @@ import { StoreService } from './store.service';
 import { StoreModule } from '@ngrx/store';
 import { provideMockStore } from '@ngrx/store/testing';
 import { getBaseInitialState } from './reducers/reducers.helpers';
+import { getBaseTestStoreProvider } from '../testing/unit-test-helpers';
 
 describe('StoreService', () => {
   beforeEach(() =>
     TestBed.configureTestingModule({
       imports: [StoreModule],
-      providers: [
-        provideMockStore({
-          initialState: getBaseInitialState(),
-        }),
-      ],
+      providers: [getBaseTestStoreProvider()],
     }),
   );
 

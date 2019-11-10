@@ -9,6 +9,7 @@ import {
 } from 'src/app/store/reducers/reducers.helpers';
 import { RouterTestingModule } from '@angular/router/testing';
 import { PipesModule } from 'src/app/pipes/pipes.module';
+import { getBaseTestStoreProvider } from 'src/app/testing/unit-test-helpers';
 
 describe('PostPageComponent', () => {
   let component: PostPageComponent;
@@ -18,14 +19,7 @@ describe('PostPageComponent', () => {
     TestBed.configureTestingModule({
       declarations: [PostPageComponent],
       imports: [ComponentsModule, RouterTestingModule, PipesModule],
-      providers: [
-        provideMockStore({
-          initialState: {
-            entities: getBaseInitialState(),
-            entityLists: getBaseInitialListState(),
-          },
-        }),
-      ],
+      providers: [getBaseTestStoreProvider()],
     }).compileComponents();
   }));
 

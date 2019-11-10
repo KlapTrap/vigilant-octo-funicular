@@ -8,6 +8,7 @@ import {
   getBaseInitialState,
   getBaseInitialListState,
 } from 'src/app/store/reducers/reducers.helpers';
+import { getBaseTestStoreProvider } from 'src/app/testing/unit-test-helpers';
 
 describe('PostCreateComponent', () => {
   let component: PostCreateComponent;
@@ -17,14 +18,7 @@ describe('PostCreateComponent', () => {
     TestBed.configureTestingModule({
       declarations: [PostCreateComponent],
       imports: [FormsModule, RouterTestingModule],
-      providers: [
-        provideMockStore({
-          initialState: {
-            entities: getBaseInitialState(),
-            entityLists: getBaseInitialListState(),
-          },
-        }),
-      ],
+      providers: [getBaseTestStoreProvider()],
     }).compileComponents();
   }));
 
