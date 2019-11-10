@@ -3,6 +3,14 @@ import { appActionPrefix } from './action-helpers';
 import { StoreEntityKeys, StoreEntityValue } from 'src/app/types/store.types';
 import { NormalisedResponse } from './entity-list.actions';
 
+export interface EntityActionSuccessConfig<
+  Y extends StoreEntityKeys = StoreEntityKeys
+> {
+  entityType: Y;
+  id: number;
+  normalisedResponse: NormalisedResponse;
+}
+
 const createActionPrefix = `${appActionPrefix}create`;
 export type EntityWithoutId<T extends StoreEntityKeys> = Omit<
   StoreEntityValue<T>,
@@ -11,13 +19,6 @@ export type EntityWithoutId<T extends StoreEntityKeys> = Omit<
 export interface CreateEntityActionConfig<T extends StoreEntityKeys> {
   entityType: T;
   newEntity: EntityWithoutId<T>;
-}
-
-export interface EntityActionSuccessConfig<
-  Y extends StoreEntityKeys = StoreEntityKeys
-> {
-  entityType: Y;
-  normalisedResponse: NormalisedResponse;
 }
 
 export const startCreateEntity = createAction(
@@ -40,13 +41,6 @@ export const createEntityFailure = createAction(
 export interface StartGet<T extends StoreEntityKeys> {
   entityType: T;
   id: number;
-}
-
-export interface EntityActionSuccessConfig<
-  Y extends StoreEntityKeys = StoreEntityKeys
-> {
-  entityType: Y;
-  normalisedResponse: NormalisedResponse;
 }
 
 export const initGetEntity = createAction(

@@ -19,6 +19,7 @@ import {
   createEntitySuccess,
   EntityWithoutId,
   initGetEntity,
+  getEntitySuccess,
 } from '../actions/entity.actions';
 import { selectEntitiy } from '../selectors/entity.selectors';
 
@@ -59,8 +60,9 @@ export class EntityFetchEffect {
         const normalisedResponse = EntityNormaliser.normaliseEntity(
           response.body,
         );
-        return createEntitySuccess({
+        return getEntitySuccess({
           entityType,
+          id: entityId,
           normalisedResponse,
         });
       }),

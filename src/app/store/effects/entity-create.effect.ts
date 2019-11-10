@@ -55,6 +55,7 @@ export class EntityCreateEffect {
         });
         return createEntitySuccess({
           entityType,
+          id: response.body.id,
           normalisedResponse,
         });
       }),
